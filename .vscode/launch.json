@@ -1,0 +1,101 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Client",
+      "presentation": {
+        "group": "Mod Development - SakuraCore",
+        "order": 0
+      },
+      "projectName": "SakuraCore",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\build\\moddev\\clientRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\build\\moddev\\clientRunVmArgs.txt",
+        "-Dfml.modFolders\u003dexamplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+      ],
+      "cwd": "${workspaceFolder}\\run",
+      "env": {
+        "MOD_CLASSES": "examplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+      },
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Data",
+      "presentation": {
+        "group": "Mod Development - SakuraCore",
+        "order": 1
+      },
+      "projectName": "SakuraCore",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\build\\moddev\\dataRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\build\\moddev\\dataRunVmArgs.txt",
+        "-Dfml.modFolders\u003dexamplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+      ],
+      "cwd": "${workspaceFolder}\\run",
+      "env": {
+        "MOD_CLASSES": "examplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+      },
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "GameTestServer",
+      "presentation": {
+        "group": "Mod Development - SakuraCore",
+        "order": 2
+      },
+      "projectName": "SakuraCore",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\build\\moddev\\gameTestServerRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\build\\moddev\\gameTestServerRunVmArgs.txt",
+        "-Dfml.modFolders\u003dexamplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+      ],
+      "cwd": "${workspaceFolder}\\run",
+      "env": {
+        "MOD_CLASSES": "examplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+      },
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Server",
+      "presentation": {
+        "group": "Mod Development - SakuraCore",
+        "order": 3
+      },
+      "projectName": "SakuraCore",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\build\\moddev\\serverRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\build\\moddev\\serverRunVmArgs.txt",
+        "-Dfml.modFolders\u003dexamplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+      ],
+      "cwd": "${workspaceFolder}\\run",
+      "env": {
+        "MOD_CLASSES": "examplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+      },
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    }
+  ]
+}
