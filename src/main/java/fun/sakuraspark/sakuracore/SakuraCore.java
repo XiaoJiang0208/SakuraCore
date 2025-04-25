@@ -1,4 +1,4 @@
-package com.example.examplemod;
+package fun.sakuraspark.sakuracore;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -34,9 +34,10 @@ import org.slf4j.Logger;
 public class SakuraCore
 {
     // Define mod id in a common place for everything to reference
-    public static final String MODID = "examplemod";
+    public static final String MODID = "sakuracore";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
+    
     // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     // Create a Deferred Register to hold Items which will all be registered under the "examplemod" namespace
@@ -109,6 +110,8 @@ public class SakuraCore
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event)
     {
+
+        
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
     }

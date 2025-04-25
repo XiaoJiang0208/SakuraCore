@@ -16,11 +16,11 @@
       ],
       "vmArgs": [
         "@D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\build\\moddev\\clientRunVmArgs.txt",
-        "-Dfml.modFolders\u003dexamplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+        "-Dfml.modFolders\u003dsakuracore%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
       ],
       "cwd": "${workspaceFolder}\\run",
       "env": {
-        "MOD_CLASSES": "examplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+        "MOD_CLASSES": "sakuracore%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
       },
       "console": "internalConsole",
       "shortenCommandLine": "none"
@@ -40,11 +40,11 @@
       ],
       "vmArgs": [
         "@D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\build\\moddev\\dataRunVmArgs.txt",
-        "-Dfml.modFolders\u003dexamplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+        "-Dfml.modFolders\u003dsakuracore%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
       ],
       "cwd": "${workspaceFolder}\\run",
       "env": {
-        "MOD_CLASSES": "examplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+        "MOD_CLASSES": "sakuracore%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
       },
       "console": "internalConsole",
       "shortenCommandLine": "none"
@@ -64,11 +64,11 @@
       ],
       "vmArgs": [
         "@D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\build\\moddev\\gameTestServerRunVmArgs.txt",
-        "-Dfml.modFolders\u003dexamplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+        "-Dfml.modFolders\u003dsakuracore%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
       ],
       "cwd": "${workspaceFolder}\\run",
       "env": {
-        "MOD_CLASSES": "examplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+        "MOD_CLASSES": "sakuracore%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
       },
       "console": "internalConsole",
       "shortenCommandLine": "none"
@@ -88,11 +88,11 @@
       ],
       "vmArgs": [
         "@D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\build\\moddev\\serverRunVmArgs.txt",
-        "-Dfml.modFolders\u003dexamplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+        "-Dfml.modFolders\u003dsakuracore%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
       ],
       "cwd": "${workspaceFolder}\\run",
       "env": {
-        "MOD_CLASSES": "examplemod%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
+        "MOD_CLASSES": "sakuracore%%D:\\Minecraft\\SakuraSparkMod\\SakuraCore\\bin\\main"
       },
       "console": "internalConsole",
       "shortenCommandLine": "none"

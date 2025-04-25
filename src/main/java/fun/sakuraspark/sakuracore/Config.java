@@ -1,4 +1,4 @@
-package com.example.examplemod;
+package fun.sakuraspark.sakuracore;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
