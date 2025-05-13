@@ -1,5 +1,7 @@
 {
   "itemGroup.sakuracore": "Example Mod Tab",
   "block.sakuracore.example_block": "Example Block",
-  "item.sakuracore.example_item": "Example Item"
+  "item.sakuracore.example_item": "Example Item",
+  "key.sakuracore.test": "Example Key",
+  "key.categories.sakuracore.test": "Example Key Category"
 }

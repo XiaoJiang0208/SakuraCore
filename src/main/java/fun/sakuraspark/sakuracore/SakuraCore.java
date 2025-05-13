@@ -1,10 +1,13 @@
 package fun.sakuraspark.sakuracore;
 
 import com.mojang.logging.LogUtils;
+
+import fun.sakuraspark.sakuracore.gui.TestScreen;
+import fun.sakuraspark.sakuracore.registration.KeyMappingRegister;
+import fun.sakuraspark.sakuracore.registration.ResRegister;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -24,9 +27,11 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+
+import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -37,30 +42,9 @@ public class SakuraCore
     public static final String MODID = "sakuracore";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
-    
-    // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
-    // Create a Deferred Register to hold Items which will all be registered under the "examplemod" namespace
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "examplemod" namespace
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    // Creates a new Block with the id "examplemod:example_block", combining the namespace and path
-    public static final RegistryObject<Block> EXAMPLE_BLOCK = BLOCKS.register("example_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
-    // Creates a new BlockItem with the id "examplemod:example_block", combining the namespace and path
-    public static final RegistryObject<Item> EXAMPLE_BLOCK_ITEM = ITEMS.register("example_block", () -> new BlockItem(EXAMPLE_BLOCK.get(), new Item.Properties()));
-
-    // Creates a new food item with the id "examplemod:example_id", nutrition 1 and saturation
-    public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties().food(new FoodProperties.Builder()
-            .alwaysEat().nutrition(1).saturationMod(2f).build())));
-
-    // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab
-    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
-            .withTabsBefore(CreativeModeTabs.COMBAT)
-            .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
-            .displayItems((parameters, output) -> {
-                output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-            }).build());
+    private static final ResRegister register = new ResRegister(MODID);
+    private static final KeyMappingRegister keyMappingRegister = new KeyMappingRegister();
 
     public SakuraCore()
     {
@@ -69,13 +53,24 @@ public class SakuraCore
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        // Register the Deferred Register to the mod event bus so blocks get registered
-        BLOCKS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so items get registered
-        ITEMS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so tabs get registered
-        CREATIVE_MODE_TABS.register(modEventBus);
+        final RegistryObject<Block> EXAMPLE_BLOCK = register.block("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
+        register.item("example_block", EXAMPLE_BLOCK, new Item.Properties());
+        final RegistryObject<Item> EXAMPLE_ITEM = register.item("example_item", new Item.Properties().food(new FoodProperties.Builder()
+                .alwaysEat().nutrition(1).saturationMod(2f).build()));
 
+        register.creativeModeTab("example_tab", CreativeModeTab.builder()
+                .withTabsBefore(CreativeModeTabs.COMBAT)
+                .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
+                .displayItems((parameters, output) -> {
+                    output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+                }).build());
+
+        register.register(modEventBus);
+        keyMappingRegister.keyMapping("key.sakuracore.test", "key.categories.sakuracore.test", GLFW.GLFW_KEY_A);
+        keyMappingRegister.register(modEventBus);
+        keyMappingRegister.bindKeyMapping("key.sakuracore.test", () -> {
+            Minecraft.getInstance().setScreen(new TestScreen(Component.translatable("key.sakuracore.test")));
+        });
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -103,7 +98,7 @@ public class SakuraCore
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-            event.accept(EXAMPLE_BLOCK_ITEM);
+            event.accept(register.getItem("example_block"));
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
