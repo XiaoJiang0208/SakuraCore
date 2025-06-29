@@ -1,4 +1,4 @@
-package fun.sakuraspark.sakuracore.gui.components;
+package fun.sakuraspark.sakuracore.client.gui.components;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractScrollWidget;

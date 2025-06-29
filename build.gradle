@@ -2,7 +2,7 @@ plugins {
     id 'idea'
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev.legacyforge' version '2.0.87'
+    id 'net.neoforged.moddev.legacyforge' version '2.0.91'
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -141,6 +141,8 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+
+    implementation 'org.xerial:sqlite-jdbc:3.45.3.0'
 }
 
 // Uncomment the lines below if you wish to configure mixin. The mixin file should be named modid.mixins.json.
@@ -191,7 +193,10 @@ legacyForge.ideSyncTask generateModMetadata
 // Example configuration to allow publishing using the maven-publish plugin
 publishing {
     publications {
-        register('mavenJava', MavenPublication) {
+        register('SakuraCore', MavenPublication) {
+            groupId = 'fun.sakuraspark'
+            artifactId = 'sakuracore'
+            version = project.version
             from components.java
         }
     }

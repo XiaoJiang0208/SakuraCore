@@ -1,4 +1,4 @@
-package fun.sakuraspark.sakuracore.graphics;
+package fun.sakuraspark.sakuracore.client.graphics;
 
 import java.util.List;
 import java.util.Queue;

@@ -1,4 +1,4 @@
-package fun.sakuraspark.sakuracore.gui;
+package fun.sakuraspark.sakuracore.client.gui;
 
 import javax.annotation.Nonnull;
 
@@ -12,10 +12,12 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.logging.LogUtils;
 
-import fun.sakuraspark.sakuracore.graphics.BezierCurveBuilder;
-import fun.sakuraspark.sakuracore.graphics.LineBuilder;
-import fun.sakuraspark.sakuracore.gui.components.ControlHandle;
-import fun.sakuraspark.sakuracore.gui.components.ControlPoint;
+import fun.sakuraspark.sakuracore.client.graphics.BezierCurveBuilder;
+import fun.sakuraspark.sakuracore.client.graphics.LineBuilder;
+import fun.sakuraspark.sakuracore.client.gui.components.ControlHandle;
+import fun.sakuraspark.sakuracore.client.gui.components.ControlPoint;
+import fun.sakuraspark.sakuracore.client.gui.components.MarkdownBox;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -51,6 +53,7 @@ public class TestScreen extends Screen {
         this.addRenderableWidget(p3);
         this.addRenderableWidget(p4);
         this.addRenderableWidget(new ControlHandle(10, 10, 5, 5));
+        this.addRenderableWidget(new MarkdownBox(20, 20, 100, 100, "# test\n## test2\n### test3\n#### test4\n##### test5\n###### test6\n**bold**\n*italic*\n~~strikethrough~~\n> blockquote\n- list item 1\n- list item 2\n- list item 3\n1. numbered item 1\n2. numbered item 2\n3. numbered item 3"));
     }
 
     @Override
@@ -85,16 +88,15 @@ public class TestScreen extends Screen {
         //RenderSystem.disableCull();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-
         // 绘制缓冲区到屏幕
         BufferUploader.drawWithShader(bufferbuilder.end());
         //TestBuilder testBuilder = new TestBuilder(graphics);
         //testBuilder.end();
         graphics.hLine(centerX-100, centerY-100, centerY-50, 0xFFFF0000);
         LineBuilder lineBuilder = new LineBuilder(graphics);
-        lineBuilder.vertex(10, 10).color(0xFFFF0000).endVertex()
-            .vertex(50, 10).color(0xFF3EC0FF).endVertex()
-            .vertex(70, 50).color(0xFFF74C30).endVertex()
+        lineBuilder.vertex(10, 10).color(0xFFFF0000).weight(8).endVertex()
+            .vertex(50, 10).color(0xFF3EC0FF).weight(5).endVertex()
+            .vertex(70, 50).color(0xFFF74C30).weight(3).endVertex()
             .vertex(90, 10).color(0xFF9BE96F).endVertex()
             .vertex(110, 10).color(0xFF3EC0FF).endVertex()
             .vertex(130, 50).color(0xFFF74C30).endVertex();

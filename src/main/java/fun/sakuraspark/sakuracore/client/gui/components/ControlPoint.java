@@ -1,4 +1,4 @@
-package fun.sakuraspark.sakuracore.gui.components;
+package fun.sakuraspark.sakuracore.client.gui.components;
 
 import org.jline.utils.Log;
 

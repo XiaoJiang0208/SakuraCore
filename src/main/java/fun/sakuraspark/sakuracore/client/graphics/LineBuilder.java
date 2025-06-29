@@ -1,4 +1,4 @@
-package fun.sakuraspark.sakuracore.graphics;
+package fun.sakuraspark.sakuracore.client.graphics;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.joml.Matrix4f;

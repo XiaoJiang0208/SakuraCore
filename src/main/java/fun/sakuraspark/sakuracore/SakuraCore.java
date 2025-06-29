@@ -2,11 +2,22 @@ package fun.sakuraspark.sakuracore;
 
 import com.mojang.logging.LogUtils;
 
-import fun.sakuraspark.sakuracore.gui.TestScreen;
+import fun.sakuraspark.sakuracore.client.gui.TestScreen;
+import fun.sakuraspark.sakuracore.client.renderer.entity.CameraEntityModel;
+import fun.sakuraspark.sakuracore.client.renderer.entity.CameraEntityRenderer;
+import fun.sakuraspark.sakuracore.registration.EntityRegister;
 import fun.sakuraspark.sakuracore.registration.KeyMappingRegister;
 import fun.sakuraspark.sakuracore.registration.ResRegister;
+import fun.sakuraspark.sakuracore.utils.dbutil.DatabaseManager;
+import fun.sakuraspark.sakuracore.world.entity.CameraEntity;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -40,16 +51,25 @@ public class SakuraCore
 {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "sakuracore";
-    // Directly reference a slf4j logger
+    // // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
+
+    private static final boolean DEBUG = true;
 
     private static final ResRegister register = new ResRegister(MODID);
     private static final KeyMappingRegister keyMappingRegister = new KeyMappingRegister();
+    private static final EntityRegister entityRegister = new EntityRegister(MODID);
+    // private DatabaseManager dm;
+
+    private Entity customEntity;
 
     public SakuraCore()
     {
+        if (!DEBUG) {
+            return; // Disable mod loading in release builds
+        }
+        LOGGER.info("SakuraCore is loading...");
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
@@ -65,12 +85,25 @@ public class SakuraCore
                     output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
                 }).build());
 
-        register.register(modEventBus);
+        register.registerALL();
         keyMappingRegister.keyMapping("key.sakuracore.test", "key.categories.sakuracore.test", GLFW.GLFW_KEY_A);
-        keyMappingRegister.register(modEventBus);
+        keyMappingRegister.keyMapping("key.sakuracore.test2", "key.categories.sakuracore.test", GLFW.GLFW_KEY_V);
+        keyMappingRegister.registerALL();
         keyMappingRegister.bindKeyMapping("key.sakuracore.test", () -> {
             Minecraft.getInstance().setScreen(new TestScreen(Component.translatable("key.sakuracore.test")));
         });
+        keyMappingRegister.bindKeyMapping("key.sakuracore.test2", () -> {
+            if (customEntity != null) {
+                Minecraft.getInstance().setCameraEntity(customEntity);
+                customEntity = null;
+            }
+        });
+
+        entityRegister.entity("camera", () -> EntityType.Builder.of(CameraEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).clientTrackingRange(10).build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.tryBuild(MODID, "camera")).toString()));
+        entityRegister.entityRenderer("camera", CameraEntityRenderer::new);
+        entityRegister.entityModelLayerLocation(CameraEntityModel.LAYER_LOCATION, CameraEntityModel::createBodyLayer);
+        entityRegister.registerALL();
+
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -79,6 +112,7 @@ public class SakuraCore
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        //dm = new DatabaseManager(new SQLite("test.db"));
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
@@ -109,6 +143,16 @@ public class SakuraCore
         
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
+    }
+
+    @SubscribeEvent
+    public void onPlayerAttackEntity(net.minecraftforge.event.entity.player.AttackEntityEvent event) {
+        // 保存原摄像机实体
+        if (customEntity == null) {
+            customEntity = Minecraft.getInstance().getCameraEntity();
+        }
+        Minecraft.getInstance().setCameraEntity(event.getTarget());
+
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

@@ -6,6 +6,8 @@ import java.util.function.Supplier;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
@@ -13,6 +15,7 @@ import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.common.MinecraftForge;
 
 /**
@@ -21,6 +24,7 @@ import net.minecraftforge.common.MinecraftForge;
  * 该类提供多种方法来构造懒加载的 {@link KeyMapping} 对象，并在触发 {@link RegisterKeyMappingsEvent} 事件时完成注册。
  * </p>
  */
+@OnlyIn(Dist.CLIENT)
 public class KeyMappingRegister {
     /**
      * 存放所有待注册的 KeyMapping 懒加载对象。
@@ -141,9 +145,9 @@ public class KeyMappingRegister {
      * 在 {@link RegisterKeyMappingsEvent} 事件发生时，将调用每个 KeyMapping 实例的获取方法并注册之。
      * </p>
      *
-     * @param bus 注册事件监听的事件总线
      */
-    public void register(IEventBus bus) {
+    public void registerALL() {
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         for (Lazy<KeyMapping> keyMapping : keyMappings) {
             bus.addListener((RegisterKeyMappingsEvent event) -> {
                 event.register(keyMapping.get());

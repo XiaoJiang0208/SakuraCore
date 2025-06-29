@@ -1,4 +1,4 @@
-package fun.sakuraspark.sakuracore.gui;
+package fun.sakuraspark.sakuracore.client.gui;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package fun.sakuraspark.sakuracore.graphics;
+package fun.sakuraspark.sakuracore.client.graphics;
 
 import org.joml.Vector2f;
 import java.util.ArrayList;

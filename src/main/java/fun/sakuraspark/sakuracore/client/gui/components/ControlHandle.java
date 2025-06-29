@@ -1,17 +1,19 @@
-package fun.sakuraspark.sakuracore.gui.components;
+package fun.sakuraspark.sakuracore.client.gui.components;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferUploader;
 
-import fun.sakuraspark.sakuracore.graphics.LineBuilder;
+import fun.sakuraspark.sakuracore.client.graphics.LineBuilder;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.GameRenderer;
 
 public class ControlHandle extends AbstractWithChildrenWidget {
+    
     private ControlPoint p0;
     private ControlPoint p1;
     private int line_width = 2;
+    private int line_color = 0xFF00FF00;
 
     public ControlHandle(int x, int y, int width, int height) {
         super(x-width/x, y-height/2, width, width, null);
@@ -37,11 +39,18 @@ public class ControlHandle extends AbstractWithChildrenWidget {
         return this.getY() + this.height / 2;
     }
 
+    public ControlPoint getP0() {
+        return p0;
+    }
+    public ControlPoint getP1() {
+        return p1;
+    }
+
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         LineBuilder lineBuilder = new LineBuilder(guiGraphics);
-        lineBuilder.vertex(p0.getCenterX(), p0.getCenterY()).color(0xFF00FF00).weight(line_width).endVertex();
-        lineBuilder.vertex(p1.getCenterX(), p1.getCenterY()).color(0xFF00FF00).endVertex();
+        lineBuilder.vertex(p0.getCenterX(), p0.getCenterY()).color(line_color).weight(line_width).endVertex();
+        lineBuilder.vertex(p1.getCenterX(), p1.getCenterY()).color(line_color).endVertex();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.disableDepthTest();
